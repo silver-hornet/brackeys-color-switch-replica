@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -26,12 +27,20 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.CompareTag)
+        if (collision.CompareTag("ColorChanger"))
+        {
+            SetRandomColor();
+            Destroy(collision.gameObject);
+            return; // Otherwise, the next if statement will run
+        }
+
+        if (!collision.CompareTag(currentColor))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void SetRandomColor()
     {
-        int index = Random.Range(0, 3);
+        int index = Random.Range(0, 4);
 
         switch (index)
         {
